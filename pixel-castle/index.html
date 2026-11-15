@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>قلعة الصدق الأكاديمي | Pixel Castle</title>
+<meta name="theme-color" content="#1a2444"><meta name="description" content="مغامرة بكسلية تفاعلية عبر أربع مهام و17 سؤالا عن الصدق الأكاديمي">
+<style>
+:root{color-scheme:dark;--gold:#f3cc60;--mint:#86d7b0;--ink:#17203d;--paper:#f7e7b5;--edge:#4c355a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;height:100%;background:radial-gradient(ellipse at 50% 20%,#37496d 0%,#14192e 67%);font-family:Tahoma,Arial,sans-serif;color:white}
+body{display:flex;align-items:center;justify-content:center;overflow:hidden}button{font:inherit;cursor:pointer;touch-action:manipulation}
+#shell{width:min(100vw,calc(100dvh * 16 / 9));height:min(100dvh,calc(100vw * 9 / 16));position:relative;overflow:hidden;border:clamp(2px,.35vw,6px) solid #1b1a32;box-shadow:0 0 0 3px #596277,0 12px 75px #0008;background:#304563;isolation:isolate;container-type:size}
+canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelated;image-rendering:crisp-edges}
+#vignette{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#0a102c95,transparent 25%,transparent 82%,#0c1125a1)}
+#content{position:absolute;inset:0} .hidden{display:none!important}
+.bigtitle{font-family:Georgia,serif;font-size:clamp(30px,5.8cqw,76px);font-weight:900;text-shadow:4px 5px #162033,0 0 15px #c9713c;line-height:1.18;letter-spacing:0}
+.pixel-en{font-family:ui-monospace,monospace;letter-spacing:.14em;text-shadow:3px 3px #191b33;font-size:clamp(11px,1.9cqw,25px);font-weight:900}
+#home,#win,#map,#feedback,#startstory{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:1.6cqh}
+#home{padding-top:7%;justify-content:flex-start}#home .bigtitle{color:#fff4cc;max-width:96%;}#home .subtitle{font-size:clamp(12px,1.65cqw,22px);color:#ffde97;text-shadow:1px 2px #242438}
+#home .homebtn{margin-top:16cqh}#startstory{background:#0d102d85;gap:3cqh}#startstory .story{max-width:70%;background:#192241ee;border:3px solid #f1c36f;padding:3cqh 3cqw;line-height:1.9;font-size:clamp(12px,1.9cqw,24px);box-shadow:7px 7px #161327}
+.pbutton{border:3px solid #201e39;background:#e4a84a;color:#342741;box-shadow:inset 0 3px #ffe2a6,inset 0 -5px #a65c38,4px 5px #121b33;font-weight:900;padding:1.3cqh 2.5cqw;min-height:6cqh;transition:transform .1s,filter .1s;font-size:clamp(12px,1.6cqw,23px)}.pbutton:hover:not(:disabled){filter:brightness(1.12);transform:translateY(-2px)}.pbutton:active{transform:translateY(3px);box-shadow:inset 0 2px #ffe2a6}
+.pbutton.secondary{background:#527eaa;color:#fff;box-shadow:inset 0 3px #a6d8eb,inset 0 -5px #2b456a,4px 5px #121b33}.pbutton:disabled{opacity:.48;cursor:not-allowed}
+#mute{position:absolute;left:1.4cqw;top:2.6cqh;z-index:8;border:2px solid #9b9bb1;color:#fff;background:#1b214bcc;padding:.75cqh 1cqw;font-size:clamp(10px,1.2cqw,17px)}
+#reset{position:absolute;right:1.4cqw;top:2.6cqh;z-index:8;border:2px solid #9b9bb1;color:#fff;background:#1b214bcc;padding:.75cqh 1cqw;font-size:clamp(10px,1.2cqw,17px)}
+.hud{position:absolute;top:2cqh;right:10cqw;left:10cqw;display:flex;justify-content:space-between;align-items:center;gap:1cqw;font-size:clamp(10px,1.35cqw,19px);font-weight:bold;text-shadow:1px 2px #17142b}.hud .coins{color:#ffd373;letter-spacing:.25em;text-shadow:0 0 9px #ffcb47}.hud .counter{background:#273355dd;border:2px solid #e3c37d;padding:.8cqh 1.2cqw}
+#map{justify-content:flex-start;padding:8cqh 4cqw 0;gap:2cqh}#map h2{margin:0;font-size:clamp(18px,3.6cqw,48px);text-shadow:3px 4px #11182d;color:#fff0bb}
+#map .mapdesc{margin:0;font-size:clamp(11px,1.5cqw,19px)}.missions{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:1.7cqw;margin-top:4cqh;direction:ltr}
+.mission{border:3px solid #1e294c;min-height:23cqh;background:linear-gradient(#7a93a8 0 38%,#3c526d 38% 100%);box-shadow:inset 0 0 0 3px #a9bec2,5px 6px #18243e;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:2cqh .5cqw;color:white;text-shadow:1px 2px #17213a;transition:transform .15s;position:relative;font-size:clamp(11px,1.6cqw,22px);font-weight:bold;direction:rtl}
+.mission:hover{transform:translateY(-7px);filter:brightness(1.1)}.mission .mi{font-size:clamp(35px,5cqw,70px);filter:drop-shadow(3px 5px #1b2842)}.mission.done{border-color:#f3cd58;box-shadow:inset 0 0 0 3px #f7de96,4px 5px #17213e}.mission.done:after{content:'✓';background:#267958;position:absolute;top:-13px;right:-10px;padding:1px 7px;color:#fff;font-size:clamp(11px,2cqw,25px)}
+#map .castle-king{margin-top:6cqh}.hint{font-size:clamp(10px,1.25cqw,17px);text-shadow:2px 2px #13152c;color:#f5e5b7}
+#level{position:absolute;inset:0}#level .questionboard{position:absolute;top:10%;right:11%;left:11%;min-height:26%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.6cqh;background:linear-gradient(#f8eaca,#e8ca8d);border:4px solid #533f47;box-shadow:0 0 0 4px #af7546,6px 7px #1b2038b0;padding:1.3cqh 2cqw;color:#2e2743}
+#level .questionboard .qtop{font-family:ui-monospace,monospace;color:#774c46;letter-spacing:.07em;font-size:clamp(9px,1.2cqw,16px)}#level .questionboard h3{font-size:clamp(12px,1.85cqw,24px);line-height:1.52;margin:0;max-height:17cqh;overflow:auto;scrollbar-width:thin}
+.choices{position:absolute;top:51%;right:5%;left:5%;height:30%;display:grid;grid-template-columns:repeat(3,1fr);direction:ltr;gap:2cqw;align-items:center}
+.choice{direction:rtl;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1cqh;position:relative;border:3px solid #293454;min-height:75%;padding:2cqh 1cqw;background:#25334ac9;color:#fff6df;box-shadow:inset 0 0 0 2px #768d9f,4px 5px #161a30;text-shadow:1px 2px #141a31;font-size:clamp(11px,1.42cqw,18px);font-weight:bold;line-height:1.5;transition:transform .15s,background .15s;word-break:normal}
+.choice:hover:not(:disabled){background:#446583e8;transform:translateY(-4px)}.choice:disabled{cursor:default}.choice .n{position:absolute;top:-1.3cqh;left:calc(50% - 2.2cqw);width:4.4cqw;min-width:24px;text-align:center;background:#e9ba58;border:2px solid #4f3546;color:#30223d;line-height:1.4;font-family:monospace;text-shadow:none}
+.choice.chosen-good{border-color:#c7ff97;background:#3a8b68dd}.choice.chosen-bad{border-color:#ffa1a1;background:#914b65dd}.choice:focus-visible,.pbutton:focus-visible,.mission:focus-visible{outline:4px solid #fff;outline-offset:2px}
+#level .bottom{position:absolute;bottom:2%;right:3%;left:3%;display:flex;justify-content:space-between;align-items:center;gap:1.5cqw;font-size:clamp(11px,1.45cqw,18px);text-shadow:2px 2px #131d38}#level .bottom span{background:#26314cd1;border:2px solid #7e94b1;padding:1cqh 1.4cqw}#level .bottom .pbutton{min-height:auto;padding:1cqh 1.5cqw}
+#feedback{background:#090e2abb;z-index:5;gap:2cqh;animation:pop .28s ease-out}#feedback .dialog{width:min(76%,700px);max-height:85%;overflow:auto;background:#f4e0a7;border:5px solid #4a3546;box-shadow:0 0 0 5px #b77d51,9px 11px #111729;color:#30213c;padding:3.5cqh 3cqw}#feedback .big{font-size:clamp(29px,5.4cqw,73px);line-height:1;margin:0 0 2cqh}#feedback h2{font-size:clamp(20px,2.7cqw,38px);margin:0 0 1cqh}#feedback p{font-size:clamp(12px,1.55cqw,21px);line-height:1.7;margin:0 0 2.2cqh}
+#win{background:#0e0d2080;gap:2cqh;padding:4cqw}#win h1{color:#ffeab4;font-size:clamp(25px,4.3cqw,54px);text-shadow:4px 5px #151b32}#win .finalmessage{max-width:73%;font-size:clamp(13px,1.9cqw,26px);text-shadow:2px 3px #151b32;line-height:1.8}#win .coinrow{font-size:clamp(30px,4.4cqw,60px);letter-spacing:1cqw;filter:drop-shadow(0 0 15px #ffde87)}
+@keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@media (orientation:portrait) and (max-width:700px){body{background:#121a31}#shell{width:min(100dvh,calc(100vw * 16 / 9));height:min(100vw,calc(100dvh * 9 / 16));transform:rotate(90deg)} }
+@media (prefers-reduced-motion:reduce){.pbutton,.mission,.choice{transition:none}#feedback{animation:none}}
+</style>
+</head>
+<body>
+<div id="shell">
+<canvas id="world" width="960" height="540" aria-hidden="true"></canvas><div id="vignette"></div>
+<button id="mute" aria-label="التحكم بالموسيقى">🔇 الموسيقى</button><button id="reset" title="إعادة اللعبة من البداية">↻ البداية</button>
+<div id="content"></div>
+</div>
+<script>
+'use strict';
+const MISSIONS=[
+ {id:'doors',name:'الأبواب الوهمية',en:'FAKE DOORS',icon:'🚪',desc:'اعثر على الباب الحقيقي عبر ثلاثة تحديات',questions:[
+  {q:'ما المقصود بالصدق الأكاديمي؟',a:['تقديم أعمال الآخرين بعد تعديل بعض كلماتها.','الالتزام بالأمانة والأصالة والاعتراف بمصادر الأفكار والمعلومات.','الاعتماد على مصدر واحد في جميع المهام.'],c:1,why:'الأصالة والأمانة والاعتراف بالمصادر هي أساس الصدق الأكاديمي.'},
+  {q:'قدم معلم طالب عملا كتبه شخص آخر باسمه، ما الحكم؟',a:['ممارسة مقبولة عند موافقة الكاتب.','سوء سلوك أكاديمي.','تعاون أكاديمي مشروع.'],c:1,why:'تقديم عمل الغير باسمك لا يعكس تعلمك وجهدك الحقيقي.'},
+  {q:'هل يشترط أن تكون المهمة منسوخة بالكامل حتى تعد مخالفة أكاديمية؟',a:['نعم، يجب نسخ المهمة كاملة.','نعم، بشرط أن تكون من كتاب.','لا، قد تكون المخالفة في أجزاء من العمل أو أفكاره.'],c:2,why:'المخالفة قد تقع على جزء من العمل أو فكرة حتى دون نسخ كامل المهمة.'}
+ ]},
+ {id:'jump',name:'قفزات المعرفة',en:'MATHS JUMP',icon:'🪨',desc:'اقفز على المنصة الصحيحة في أربعة تحديات',questions:[
+  {q:'أعاد معلم طالب صياغة فكرة باحث دون ذكر اسمه أو مصدره، ما الحكم؟',a:['سوء سلوك أكاديمي.','إعادة صياغة سليمة.','تحليل شخصي مستقل.'],c:0,why:'تغيير الكلمات لا يلغي ضرورة الاعتراف بمصدر الفكرة.'},
+  {q:'ما الفرق الأساسي بين الاقتباس المشروع والنسخ غير الموثق؟',a:['طول النص المنقول.','عدد المصادر المستخدمة.','الاعتراف بالمصدر وتوثيق الاقتباس وفقا للقواعد.'],c:2,why:'التوثيق الصحيح هو المعيار الفاصل، وليس طول النص أو عدد المصادر.'},
+  {q:'تغيير كلمات النص الأصلي دون توثيق مصدر الفكرة يجعل العمل أصيلا.',a:['صح.','خطأ.','يعتمد على عدد الكلمات المتغيرة.'],c:1,why:'إعادة الصياغة دون توثيق المصدر تظل مشكلة في الأمانة الأكاديمية.'},
+  {q:'عند نقل نص حرفيا من مصدر، ما الإجراء الصحيح؟',a:['وضع النص بين علامتي اقتباس وتوثيق مصدره.','تغيير ترتيب الجمل فقط.','حذف اسم الكاتب والاكتفاء بعنوان النص.'],c:0,why:'الاقتباس الحرفي يحتاج إلى تمييز النص المنقول وتوثيقه.'}
+ ]},
+ {id:'rolls',name:'الأسطوانات المتحركة',en:'PIXEL ROLLS',icon:'🪵',desc:'حافظ على توازنك عبر خمسة تحديات',questions:[
+  {q:'جمع معلم طالب فقرات من أربعة مصادر وقدمها دون توثيق، ما نوع النسخ؟',a:['النسخ من مصدر واحد.','النسخ من عدة مصادر.','الاقتباس المشروع.'],c:1,why:'تجميع النصوص من عدة مصادر دون الاعتراف بها لا يجعل العمل أصيلا.'},
+  {q:'ما الأداة المذكورة في الملف للكشف عن التشابه النصي؟',a:['MLA.','Google Scholar.','Turnitin.'],c:2,why:'Turnitin أداة لفحص التشابه النصي، ولا يصدر وحده حكما على المخالفة.'},
+  {q:'هل استخدام مصادر متعددة يجعل المهمة أصيلة تلقائيا؟',a:['لا، يجب معالجة الأفكار وتوثيقها بصورة صحيحة.','نعم، لأن تعدد المصادر يمنع النسخ.','نعم، إذا كانت المصادر إلكترونية.'],c:0,why:'الأصالة ترتبط بالمعالجة المستقلة والتوثيق، وليس بعدد المصادر.'},
+  {q:'أين ينبغي الإشارة إلى المصادر المستخدمة في العمل الأكاديمي؟',a:['في قائمة المراجع فقط.','في متن النص فقط.','في المتن وقائمة المراجع وفقا لمتطلبات التوثيق.'],c:2,why:'التوثيق الكامل يربط الإحالات داخل النص بقائمة المراجع.'},
+  {q:'أظهر تقرير Turnitin نسبة تشابه في مهمة أكاديمية. ما القرار المهني الصحيح؟',a:['اعتبار الطالب مخالفا مباشرة.','رفض المهمة دون مراجعتها.','فحص النصوص المتشابهة وسياقها وطبيعتها قبل الحكم.'],c:2,why:'نسبة التشابه مؤشر يستدعي الفحص ولا تثبت المخالفة وحدها.'}
+ ]},
+ {id:'stones',name:'الأحجار الراقصة',en:'DANCING STONES',icon:'💎',desc:'اعبر النهر عبر خمسة تحديات أخيرة',questions:[
+  {q:'قرأ معلم طالب ثلاثة أبحاث، ثم كتب تحليله الخاص ووثق جميع المصادر. ما الحكم؟',a:['نسخ من عدة مصادر.','ممارسة أكاديمية سليمة.','انتحال أفكار الآخرين.'],c:1,why:'التحليل الأصيل مع توثيق المصادر يمثل ممارسة أكاديمية سليمة.'},
+  {q:'نقل معلم طالب فقرة حرفيا ووضعها بين علامتي اقتباس دون ذكر المصدر. ما الحكم؟',a:['اقتباس موثق.','إعادة صياغة.','اقتباس غير مكتمل التوثيق.'],c:2,why:'علامتا الاقتباس وحدهما لا تكفيان؛ يجب ذكر المصدر.'},
+  {q:'ناقش معلمان فكرة بحثية، ثم أنجز كل منهما مهمته بصورة مستقلة. ما الحكم؟',a:['سوء سلوك أكاديمي في جميع الحالات.','ممارسة مشروعة ما دام كل منهما قدم عمله الخاص.','نسخ من مصدر واحد.'],c:1,why:'المناقشة والتعاون المسموح لا يلغي استقلالية إنجاز كل مهمة.'},
+  {q:'ما العوامل التي تؤخذ بعين الاعتبار عند تحديد العواقب؟',a:['نوع المخالفة ومستواها وما إذا كانت أول مرة أو متكررة.','عدد صفحات المهمة فقط.','عدد المصادر المستخدمة فقط.'],c:0,why:'العواقب تراعي نوع المخالفة ومستواها وسوابقها وفقا للإجراءات المعتمدة.'},
+  {q:'اكتشف مراجع مهمة فقرة منقولة دون توثيق وأفكارا معاد صياغتها دون الإشارة إلى مصادرها. ما الإجراء المهني الأنسب؟',a:['إصدار حكم فوري دون مراجعة.','تجاهل الفقرة ما دامت بقية المهمة أصلية.','فحص الأدلة والتوثيق وطبيعة التشابه واتباع الإجراءات المعتمدة.'],c:2,why:'التحقق من الأدلة واتباع الإجراءات هو المسار المهني العادل.'}
+ ]}
+];
+const SKEY='pixel-integrity-v1';const blank=()=>({done:{},indexes:{doors:0,jump:0,rolls:0,stones:0},mistakes:0});
+let progress;try{progress=Object.assign(blank(),JSON.parse(localStorage.getItem(SKEY)||'null')||{});}catch(e){progress=blank()}
+const save=()=>{try{localStorage.setItem(SKEY,JSON.stringify(progress))}catch(e){}};
+let screen='home',mission=null,anim=null,choicePicked=-1,particles=[],coinsFx=[],tick=0,feedbackOpen=false,muted=true,audio=null,audioTimer=null;
+const root=document.getElementById('content'),canvas=document.getElementById('world'),ctx=canvas.getContext('2d'),muteButton=document.getElementById('mute');
+ctx.imageSmoothingEnabled=false;const W=960,H=540;
+const R=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h))};
+const circ=(x,y,r,c)=>{ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill()};
+const line=(x,y,x2,y2,c,size=3)=>{ctx.strokeStyle=c;ctx.lineWidth=size;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x2,y2);ctx.stroke()};
+const poly=(pts,c)=>{ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(...pts[0]);for(let k=1;k<pts.length;k++)ctx.lineTo(...pts[k]);ctx.closePath();ctx.fill()};
+function starfield(n=60){for(let i=0;i<n;i++){let x=((i*177+40)%930)+10,y=(i*59%240)+12;R(x,y,2+(i%3==0?1:0),2,i%3?'#e3e1ba':'#becfd3')}}
+function cloud(x,y,scale=1){let s=scale;R(x,y+16*s,104*s,24*s,'#b6d8e8');R(x+20*s,y,55*s,34*s,'#dceefa');R(x+8*s,y+12*s,30*s,22*s,'#dceefa');R(x+64*s,y+11*s,28*s,24*s,'#dceefa');R(x,y+38*s,104*s,5*s,'#8bb6cc')}
+function mountain(x,y,s=1,c='#506f87'){poly([[x-150*s,420],[x,y],[x+185*s,420]],c);poly([[x-45*s,y+70*s],[x,y],[x+47*s,y+70*s]],'#d1dee4')}
+function ground(y=440){R(0,y,960,100,'#416c55');R(0,y,960,14,'#96ba76');for(let i=0;i<50;i++){let x=(i*83)%960;R(x,y+18+(i*7)%72,15,4,i%3?'#376154':'#689778')}}
+function water(y=390){R(0,y,960,H-y,'#275d83');for(let i=0;i<42;i++){let x=(i*91+tick*(i%2?0.7:-.45))%1040-40,yy=y+12+(i*23)%(H-y-10);R(x,yy,14+(i%5)*4,3,i%3?'#4694b3':'#91d9ca')}}
+function castle(x=490,y=235,s=1){ctx.save();ctx.translate(x,y);ctx.scale(s,s);
+ R(-180,12,360,205,'#6d7596');R(-171,22,342,175,'#828bae');for(let row=0;row<8;row++)for(let col=0;col<12;col++){let bx=-170+col*28+(row%2?14:0),by=28+row*22;R(bx,by,20,3,'#646d92')}
+ for(const tx of [-195,195]){R(tx-38,-62,76,275,'#7884a6');R(tx-32,-49,64,245,'#96a3b9');R(tx-46,-78,92,23,'#7786ac');for(let j=0;j<4;j++)R(tx-43+j*29,-99,23,25,'#8191b4');R(tx-19,-3,38,78,'#283753');R(tx-15,2,30,52,'#ebca63')}
+ R(-73,-36,146,248,'#8a96b0');R(-80,-49,160,27,'#7e8fae');for(let j=0;j<5;j++)R(-78+j*39,-74,31,28,'#90a0b8');R(-54,98,108,112,'#28354f');ctx.fillStyle='#28354f';ctx.beginPath();ctx.arc(0,98,54,Math.PI,0);ctx.fill();R(-48,115,96,95,'#573d44');R(-2,95,5,115,'#946649');R(-22,161,6,8,'#e5b34c');R(21,161,6,8,'#e5b34c');
+ R(-9,-136,18,72,'#c6bd9c');R(9,-132,76,44,'#ab3f64');R(9,-125,53,5,'#da8492');ctx.restore();}
+function king(x,y,s=1){ctx.save();ctx.translate(x,y);ctx.scale(s,s);R(-20,0,40,40,'#8c4d4c');R(-17,-28,34,30,'#f4bd88');R(-22,-41,45,17,'#e6b64d');for(let j=0;j<3;j++)R(-19+j*18,-50,9,11,'#ffe79a');R(-11,-17,6,6,'#372d44');R(5,-17,6,6,'#372d44');R(-11,7,22,12,'#e9bd6e');R(-24,32,17,27,'#3a4569');R(7,32,17,27,'#3a4569');ctx.restore()}
+function hero(x,y,s=1,flip=false){ctx.save();ctx.translate(x,y);ctx.scale(flip?-s:s,s);R(-14,-38,28,29,'#f4b77d');R(-18,-44,36,10,'#c4b6ba');R(-15,-53,30,10,'#8f9daa');R(-22,-34,10,16,'#cad6e0');R(13,-34,10,16,'#cad6e0');R(-8,-28,5,6,'#26324b');R(5,-28,5,6,'#26324b');R(-16,-10,32,30,'#6a8ac0');R(-13,-8,26,13,'#a9c6db');R(-23,-7,9,26,'#f1b688');R(14,-7,9,26,'#f1b688');R(-14,21,13,18,'#2e3d64');R(2,21,13,18,'#2e3d64');R(-17,36,15,7,'#343547');R(2,36,16,7,'#343547');ctx.restore()}
+function coin(x,y,s=1,phase=0){ctx.save();ctx.translate(x,y);ctx.scale(s*Math.max(.3,Math.abs(Math.cos(tick*.05+phase))),s);circ(0,0,18,'#a86534');circ(0,-3,16,'#f5c758');circ(0,-3,11,'#ffea83');R(-2,-10,5,16,'#ba793a');R(-5,-8,9,4,'#ba793a');R(-6,-1,9,4,'#ba793a');ctx.restore()}
+function torch(x,y){R(x-5,y-28,11,33,'#8e684e');R(x-13,y,26,8,'#654751');let fl=Math.sin(tick*.15+x)*3;poly([[x-8,y-24],[x-9,y-42],[x+fl,y-57],[x+10,y-38],[x+9,y-23]],'#efa450');poly([[x-3,y-26],[x-2,y-40],[x+5,y-48],[x+6,y-29]],'#fff1a0')}
+function archdoor(x,y,tint='#6b4666'){R(x-57,y-132,114,153,'#a59cb3');R(x-50,y-123,100,142,'#5c617f');for(let j=0;j<5;j++)R(x-55+j*25,y-137,20,12,'#d2be9d');ctx.fillStyle=tint;ctx.beginPath();ctx.moveTo(x-39,y+12);ctx.lineTo(x-39,y-79);ctx.arc(x,y-78,39,Math.PI,0);ctx.lineTo(x+39,y+12);ctx.fill();R(x-2,y-109,4,121,'#322e4c');circ(x-13,y-45,5,'#eac469');circ(x+14,y-45,5,'#eac469');R(x-48,y+12,96,13,'#9b92a6')}
+function platform(x,y){R(x-115,y,230,17,'#8ca5b0');R(x-111,y-7,221,12,'#a6d7bd');R(x-107,y+16,216,18,'#65778a');for(let i=0;i<6;i++)R(x-102+i*39,y+20,31,6,'#4f687c')}
+function log(x,y){R(x-103,y-20,206,51,'#825438');R(x-97,y-24,196,46,'#ae754a');R(x-96,y-25,191,8,'#d3a06b');R(x-96,y+17,191,8,'#674e44');for(let k=0;k<8;k++){let xx=x-90+k*25;R(xx,y-13,5,27,'#865638')}circ(x+93,y+1,24,'#e0ac70');circ(x+93,y+1,16,'#8a6048');circ(x+93,y+1,8,'#c29061')}
+function stone(x,y){ctx.fillStyle='#5b8b9b';ctx.beginPath();ctx.ellipse(x,y+23,117,27,0,0,2*Math.PI);ctx.fill();poly([[x-105,y+8],[x-79,y-17],[x+67,y-20],[x+100,y+4],[x+66,y+28],[x-74,y+28]],'#747d88');poly([[x-105,y+3],[x-72,y-22],[x+73,y-22],[x+96,y+3],[x+53,y+13],[x-77,y+13]],'#a8a4a2');R(x-45,y-16,65,6,'#c9c6ba')}
+function exterior(dusk=false){let g=ctx.createLinearGradient(0,0,0,450);g.addColorStop(0,dusk?'#ec9470':'#40699a');g.addColorStop(.65,dusk?'#e1b58d':'#87b4cb');g.addColorStop(1,'#d7d0ab');ctx.fillStyle=g;ctx.fillRect(0,0,960,540);if(dusk){circ(720,158,61,'#f7cc7e');circ(720,158,49,'#f4d990')}else{circ(788,90,48,'#f4d98f')}
+ cloud((tick*.1)%1100-250,69,.9);cloud(620-(tick*.08)%900,95,.6);mountain(130,223,1.3,'#6886a0');mountain(660,230,1.45,'#678e9c');mountain(890,275,1.1,'#55788e');}
+function scene(){tick++;ctx.clearRect(0,0,W,H);
+ if(screen==='home'||screen==='story'){exterior();ground(435);castle(500,220,.95);hero(190+Math.sin(tick*.05)*3,419,1.7);for(let x=0;x<12;x++){R(22+x*80,467+(x%2)*20,33,25,'#3d6658');R(24+x*80,466+(x%2)*20,12,5,'#91b67d')}coinsFx=[]}
+ else if(screen==='map'){exterior();ground(429);castle(472,235,.72);for(let i=0;i<4;i++){let x=130+i*234;R(x-65,380,127,10,'#6a6b86');R(x-58,388,111,20,'#748575');R(x-46,405,94,16,'#516559');if(progress.done[MISSIONS[i].id])coin(x,352,.8,i)}hero(472,420,1.5);}
+ else if(screen==='level'){
+  if(mission.id==='doors'){R(0,0,W,H,'#3f415f');for(let y=0;y<13;y++)for(let x=0;x<24;x++){let xx=x*48+(y%2)*24;R(xx,y*42,45,38,((x+y)%4===0)?'#51506d':'#464a66');R(xx,y*42,4,37,'#41425d')};R(0,437,960,103,'#79768a');R(0,433,960,9,'#b2a0a2');for(let x=0;x<22;x++)R(x*45+6,468+(x%3)*18,30,5,'#5b5772');torch(53,315);torch(905,315);[175,480,785].forEach((x,i)=>archdoor(x,415,['#73506a','#5b6b8e','#6d526f'][i]));hero(anim?.x??80,anim?.y??411,1.2)}
+  else if(mission.id==='jump'){exterior();R(0,380,960,160,'#34526e');for(let i=0;i<14;i++){let x=i*75+(tick%9);poly([[x,520],[x+27,472],[x+57,530]],'#293a59')};[175,480,785].forEach((x,i)=>platform(x,400+(i%2)*12));hero(anim?.x??69,anim?.y??370,1.15);}
+  else if(mission.id==='rolls'){exterior();water(369);for(let i=0;i<3;i++){let x=[175,480,785][i],y=418+Math.sin(tick*.045+i)*4;log(x,y)}hero(anim?.x??71,anim?.y??376,1.17);}
+  else {exterior();water(354);for(let i=0;i<3;i++){stone([175,480,785][i],426+Math.sin(tick*.035+i)*3)}hero(anim?.x??70,anim?.y??364,1.15);}
+ }
+ else if(screen==='win'){exterior(true);water(426);ground(488);castle(480,273,.65);king(642,422,1.8);hero(299,438,1.7);for(let i=0;i<4;i++)coin(300+i*110,347,.6,i)}
+ if((screen==='home'||screen==='map'||screen==='level'||screen==='win')&&!feedbackOpen){for(let p of particles){p.x+=p.vx;p.y+=p.vy;p.tt--;R(p.x,p.y,p.s,p.s,p.c)}particles=particles.filter(p=>p.tt>0)}
+ requestAnimationFrame(scene);
+}
+const h=(tag,cls,html='')=>{let x=document.createElement(tag);if(cls)x.className=cls;x.innerHTML=html;return x};
+const btn=(label,fn,cls='')=>{let b=document.createElement('button');b.className='pbutton '+cls;b.textContent=label;b.addEventListener('click',fn);return b};
+const buttonSound=()=>{if(!muted&&!audio)startMusic()};
+function musicTone(freq,time,dur=0.11,type='square',gain=.045){if(!audio)return;let osc=audio.createOscillator(),g=audio.createGain();osc.type=type;osc.frequency.setValueAtTime(Math.max(freq,1),time);g.gain.setValueAtTime(0,time);g.gain.linearRampToValueAtTime(gain,time+.007);g.gain.exponentialRampToValueAtTime(.001,time+dur);osc.connect(g).connect(audio.destination);osc.start(time);osc.stop(time+dur+.02)}
+function fx(good){if(!audio||muted)return;let t=audio.currentTime;[0,1,2,3].forEach(i=>musicTone((good?[392,523,659,784]:[330,247,196,131])[i],t+i*.085,.12,good?'square':'sawtooth',.07))}
+function startMusic(){if(audio){audio.resume();return}let A=window.AudioContext||window.webkitAudioContext;if(!A)return;audio=new A();const melody=[659,784,880,784,659,523,587,659,523,587,659,784,698,659,587,523,659,784,880,1046,880,784,659,587,523,659,587,523,494,523,587,659],bass=[131,131,175,131,147,147,196,147,131,131,175,131,147,131,123,131];let step=0;audioTimer=setInterval(()=>{if(muted||document.hidden)return;let t=audio.currentTime+.035,m=melody[step%melody.length];musicTone(m,t,.125,'square',.022);if(step%2===0)musicTone(bass[Math.floor(step/2)%bass.length],t,.25,'triangle',.045);step++},156)}
+function setMute(on){muted=on;muteButton.innerHTML=muted?'🔇 الموسيقى':'🔊 الموسيقى';try{localStorage.setItem('pixel-mute',muted?'1':'0')}catch(e){}if(!muted)startMusic()}
+muteButton.addEventListener('click',()=>setMute(!muted));document.getElementById('reset').addEventListener('click',()=>{if(confirm('العودة إلى البداية؟ سيحذف تقدمك في المهمات الأربع.')){progress=blank();save();screen='home';render()}});
+function newCoins(){let total=MISSIONS.filter(m=>progress.done[m.id]).length;return '<span class="coins" aria-label="'+total+' عملات">'+[0,1,2,3].map(i=>i<total?'🟡':'⚪').join(' ')+'</span>'}
+function go(s){screen=s;mission=null;choicePicked=-1;anim=null;feedbackOpen=false;render()}
+function render(){root.replaceChildren();if(screen==='home')renderHome();else if(screen==='story')renderStory();else if(screen==='map')renderMap();else if(screen==='level')renderLevel();else if(screen==='win')renderWin();}
+function renderHome(){let b=h('div','');b.id='home';b.append(h('div','pixel-en','ESCAPE FROM PIXEL CASTLE'),h('div','bigtitle','قلعة الصدق الأكاديمي'),h('div','subtitle','أربع مهمات • 17 تحديا • أربع عملات للحرية'));
+ let start=btn(Object.values(progress.done).some(Boolean)?'▶ متابعة المغامرة':'▶ ابدأ المغامرة',()=>{buttonSound();go(Object.values(progress.done).some(Boolean)?'map':'story')},'homebtn');b.append(start,h('div','hint','للمعلمين الطلبة | نلعب لنتعلم ونفكر'));root.append(b)}
+function renderStory(){let b=h('div');b.id='startstory';b.append(h('div','pixel-en','THE PIXEL KINGDOM'),h('div','story','لقد أغلقت أبواب قلعة الملك البكسلي! أمامك أربع مهمات: أبواب خادعة وقفزات وممرات متحركة وأحجار وسط النهر. أجب عن الأسئلة حول الصدق الأكاديمي، واجمع أربع عملات لتحصل على حريتك.'));
+ b.append(btn('⚔️ إلى خريطة المهمات',()=>go('map')));root.append(b)}
+function renderMap(){let b=h('div');b.id='map';b.append(h('h2','','اختر مهمتك'),h('p','mapdesc','أنجز المهمات الأربع واجمع العملات لفتح بوابة الملك.'));let ms=h('div','missions');for(const m of MISSIONS){let mBtn=document.createElement('button');mBtn.className='mission '+(progress.done[m.id]?'done':'');mBtn.innerHTML='<span class="mi">'+m.icon+'</span><span>'+m.name+'</span><span class="pixel-en" style="font-size:clamp(9px,1cqw,14px)">'+m.en+'</span><span style="color:#ffd98a">'+(progress.done[m.id]?'العملة مكتسبة ✓':m.questions.length+' أسئلة')+'</span>';mBtn.addEventListener('click',()=>{mission=m;screen='level';render()});ms.append(mBtn)}b.append(ms);
+ const total=MISSIONS.filter(m=>progress.done[m.id]).length;b.append(h('div','castle-king','<b style="color:#ffe49a;display:inline-block;direction:ltr">'+total+'/4</b> عملات مكتسبة'));
+ if(total===4)b.append(btn('👑 ادخل بوابة الملك واستخدم العملات',()=>go('win')));else b.append(h('div','hint','تحتاج إلى '+(4-total)+' '+((4-total)===1?'عملة':'عملات')+' أخرى لفتح البوابة'));root.append(b)}
+function renderLevel(){if(!mission)mission=MISSIONS[0];let idx=progress.indexes[mission.id]||0;if(idx>=mission.questions.length){progress.done[mission.id]=true;save();go('map');return}let q=mission.questions[idx];let b=h('div');b.id='level';let top=h('div','hud');top.append(h('div','counter',mission.name+' &nbsp; <b dir="ltr">'+(idx+1)+'/'+mission.questions.length+'</b>'),h('div','',newCoins()));b.append(top);
+ let board=h('div','questionboard');board.append(h('div','qtop',mission.en+' · التحدي '+(idx+1)),h('h3','',q.q));b.append(board);
+ let choices=h('div','choices');q.a.forEach((answer,i)=>{let pick=document.createElement('button');pick.type='button';pick.className='choice';pick.dataset.index=i;pick.append(h('span','n',String(i+1)),h('span','',answer));pick.addEventListener('click',()=>answerTo(i,pick));choices.append(pick)});b.append(choices);
+ let bottom=h('div','bottom');bottom.append(btn('↩ خريطة القلعة',()=>go('map'),'secondary'),h('span','', 'اختر الإجابة أو اضغط 1، 2، 3'));b.append(bottom);root.append(b)}
+function answerTo(i,button){if(feedbackOpen||choicePicked!==-1)return;buttonSound();choicePicked=i;let q=mission.questions[progress.indexes[mission.id]||0],good=i===q.c;button.classList.add(good?'chosen-good':'chosen-bad');document.querySelectorAll('.choice').forEach(b=>b.disabled=true);
+ progress.mistakes+=good?0:1;save();let target=[175,480,785][i],baseY=mission.id==='doors'?410:(mission.id==='jump'?365:mission.id==='rolls'?371:360);let from=80,start=performance.now();
+ function run(t){let f=Math.min((t-start)/650,1),ease=1-Math.pow(1-f,3);anim={x:from+(target-from)*ease,y:baseY-(mission.id==='doors'?0:110*Math.sin(f*Math.PI))};if(f<1)requestAnimationFrame(run);else{fx(good);spark(target,baseY,good);setTimeout(()=>showFeedback(good,q),230)}}requestAnimationFrame(run);
+}
+function spark(x,y,good){for(let j=0;j<30;j++){let angle=j*2.399,power=2+((j*7)%19)/3;particles.push({x,y:y-30,vx:Math.cos(angle)*power,vy:Math.sin(angle)*power,s:3+(j%3)*2,c:good?['#f4ec83','#a9ffd5','#fff5c5'][j%3]:['#b7d7ef','#cd9fc6','#ffae9f'][j%3],tt:38})}}
+function showFeedback(good,q){feedbackOpen=true;let f=h('div');f.id='feedback';let d=h('div','dialog');d.append(h('div','big',good?'🪙':'💧'),h('h2','',good?'إجابة صحيحة!':'أوه! حاول مجددا'));
+ d.append(h('p','',good?q.why:'لم تصل إلى المنصة الآمنة. اقرأ الخيارات مرة أخرى، وحاول اختيار الإجابة الأدق.'));
+ d.append(btn(good?'واصل التحدي ←':'↻ أعد المحاولة',()=>{f.remove();feedbackOpen=false;choicePicked=-1;anim=null;if(good){let idx=(progress.indexes[mission.id]||0)+1;progress.indexes[mission.id]=idx;if(idx===mission.questions.length){progress.done[mission.id]=true;fx(true);save();showCoinEnd();return}save()}render()}));f.append(d);root.append(f)}
+function showCoinEnd(){let f=h('div');f.id='feedback';feedbackOpen=true;let d=h('div','dialog');d.append(h('div','big','🪙'),h('h2','','حصلت على عملة بكسلية!'),h('p','','أحسنت! أكملت مهمة '+mission.name+'. اجمع العملات الأربع لفتح بوابة الملك.'));d.append(btn('العودة إلى خريطة القلعة',()=>go('map')));f.append(d);root.append(f)}
+function renderWin(){let b=h('div');b.id='win';b.append(h('h1','','أنت حر الآن!'),h('div','finalmessage','لقد اجتزت المهمات الأربع وحصلت على عملات قلعة الصدق الأكاديمي. المعرفة والأمانة كانتا مفتاح العبور!'),h('div','coinrow','🟡 🟡 🟡 🟡'));
+ b.append(btn('↻ العب مجددا',()=>{progress=blank();save();go('home')}));root.append(b);spark(490,280,true)}
+document.addEventListener('keydown',e=>{if(screen==='level'&&/^[123]$/.test(e.key)){let b=document.querySelector('.choice[data-index="'+(Number(e.key)-1)+'"]');if(b&&!b.disabled)b.click()}if(e.key.toLowerCase()==='m')setMute(!muted)});
+try{muted=localStorage.getItem('pixel-mute')==='1'}catch(e){}muteButton.innerHTML=muted?'🔇 الموسيقى':'🔊 الموسيقى';render();requestAnimationFrame(scene);
+</script>
+</body>
+</html>
